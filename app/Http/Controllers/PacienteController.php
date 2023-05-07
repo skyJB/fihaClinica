@@ -35,6 +35,8 @@ class PacienteController extends Controller
         $pacientes = Paciente::all();
         return redirect()->route('paciente.index', compact($pacientes))
             ->with('success', 'Paciente created successfully.');
+            return redirect()->route('paciente.show', $paciente->id);
+
     }
 
     public function show(Paciente $paciente)
@@ -42,10 +44,12 @@ class PacienteController extends Controller
         return view('paciente.show', compact('paciente'));
     }
 
-    public function edit(Paciente $paciente)
-    {
-        return view('paciente.edit', compact('paciente'));
-    }
+    public function edit($id)
+{
+    $paciente = Paciente::findOrFail($id);
+    return view('paciente.edit', compact('paciente'));
+}
+
 
     public function update(Request $request, Paciente $paciente)
     {
@@ -72,4 +76,16 @@ class PacienteController extends Controller
         return redirect()->route('paciente.index')
             ->with('success', 'Paciente deleted successfully.');
     }
+
+    public function buscar(Request $request)
+{
+    $query = $request->input('q');
+
+    $pacientes = Paciente::where('nombre_completo', 'LIKE', "%$query%")
+        ->orWhere('num_identificacion', 'LIKE', "%$query%")
+        ->get();
+
+    return view('dashboard', compact('pacientes', 'query'));
+}
+
 }

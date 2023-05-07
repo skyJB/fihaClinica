@@ -13,12 +13,15 @@ class FichaClinicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $fichaClinicas = FichaClinica::all();
-        return view('ficha_clinica.index', compact('fichaClinicas'));
+public function index()
+{
+    $ficha_clinicas = FichaClinica::with('paciente')->get();
+    return view('ficha_clinica.index', compact('ficha_clinicas'));
+}
+
+
         
-    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -26,12 +29,12 @@ class FichaClinicaController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    public function create()
-    {
-        $pacientes = Paciente::all();
-        return view('ficha_clinica.create', compact('pacientes'));
-
-    }
+     public function create()
+     {
+         $pacientes = Paciente::all();
+         return view('ficha_clinica.create', compact('pacientes'));
+ 
+     }
 
     /**
      * Store a newly created resource in storage.

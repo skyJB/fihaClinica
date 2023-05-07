@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 
 class UserController extends Controller
 {
@@ -36,27 +36,23 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('users.edit', ['user' => $user]);
     }
+    
+    
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->rol = $request->input('rol');
     
-        // Validar datos del formulario
+        $user->save();
     
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'password' => 'nullable|min:6',
-            'rol' => 'required',
-        ]);
-    
-        // Actualizar usuario
-    
-        $user->update($validatedData);
-    
-        return redirect()->route('usuario.index')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
     }
     
 

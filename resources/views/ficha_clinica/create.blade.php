@@ -31,7 +31,22 @@
                                 </select>
                             </div>
 
+                           
                             <div>
+    <label for="tipo_atencion" class="block text-lg font-medium text-gray-700">Tipo de Atención:</label>
+    <input type="text" class="form-input rounded-md shadow-sm block w-full" id="tipo_atencion" name="tipo_atencion">
+</div>
+
+<div>
+    <label for="descripcion_atencion" class="block text-lg font-medium text-gray-700">Descripción de Atención:</label>
+    <textarea class="form-input rounded-md shadow-sm block w-full" id="descripcion_atencion" name="descripcion_atencion" rows="5"></textarea>
+</div>
+
+<div>
+    <label for="decisiones_paciente" class="block text-lg font-medium text-gray-700">Decisiones del Paciente:</label>
+    <textarea class="form-input rounded-md shadow-sm block w-full" id="decisiones_paciente" name="decisiones_paciente" rows="5"></textarea>
+</div>
+<div>
                                 <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                     Create
                                 </button>

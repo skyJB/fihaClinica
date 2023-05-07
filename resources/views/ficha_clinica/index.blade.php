@@ -1,121 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Ficha Clínicas') }}
+        </h2>
+    </x-slot>
 
-    <title>Ficha Clínicas</title>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="container">
+                        <h1 class="text-2xl font-bold mb-4">Fichas Clínicas</h1>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css%22%3E">
+                        <table class="table-auto w-full mb-6">
+                            <thead>
+                                <tr class="bg-gray-200 dark:bg-gray-700">
+                                    <th class="px-4 py-2">ID</th>
+                                    <th class="px-4 py-2">Num Identificador</th>
+                                    <th class="px-4 py-2">Paciente</th>
+                                    <th class="px-4 py-2">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($ficha_clinicas as $ficha_clinica)
+                                <tr>
+                                    <td class="border px-4 py-2">{{ $ficha_clinica->id }}</td>
+                                    <td class="border px-4 py-2">{{ $ficha_clinica->num_identificador }}</td>
+                                    <td class="border px-4 py-2">{{ $ficha_clinica->paciente->nombre_completo }}</td>
+                                    <td class="border px-4 py-2">
+                                        <a href="{{ route('ficha_clinica.show', $ficha_clinica) }}" class="text-blue-600 dark:text-blue-400">Ver</a>
+                                       
+                                        <form action="{{ route('ficha_clinica.destroy', $ficha_clinica) }}" method="POST" class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/js/bootstrap.bundle.min.js%22%3E"></script>
-</head>
-<body>
-    <x-app-layout>
-        <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Ficha Clínicas') }}
-            </h2>
-        </x-slot>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <div class="container">
-                    
-
-                        <a href="{{ route('ficha_clinica.create') }}" class="btn-primary-custom btn btn-primary mt-4">Crear Nueva Ficha Clínica</a>
-
-
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Num Identificador</th>
-                                        <th>ID Paciente</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($fichaClinicas as $fichaClinica)
-                                        <tr>
-                                            <td>{{ $fichaClinica->id }}</td>
-                                            <td>{{ $fichaClinica->num_identificador }}</td>
-                                            <td>{{ $fichaClinica->id_paciente }}</td>
-                                            <td>
-                                                <a href="{{ route('ficha_clinica.show', $fichaClinica->id) }}" class="btn btn-primary">View</a>
-                                                <a href="{{ route('ficha_clinica.edit', $fichaClinica->id) }}" class="btn btn-secondary">Edit</a>
-                                                <form action="{{ route('ficha_clinica.destroy', $fichaClinica->id) }}" method="POST" style="display: inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this Ficha Clínica?')">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                        <a href="{{ route('ficha_clinica.create') }}" class="btn btn-primary-custom">
+                            Crear Nueva Ficha Clínica
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </x-app-layout>
-</body>
-</html>
-
-<style>
-    table {
-        background-color: #f1f1f1;
-        font-weight: bold;
-    }
-    
-    th {
-        background-color: #999;
-        color: #fff;
-        padding: 10px;
-    }
-    
-    td {
-        padding: 10px;
-        color:black;
-    }
-    
-    .btn {
-        margin-right: 5px;
-       
-    }
-    .btn-primary-custom {
-    background-color: #138496;
-    border-color: #138496;
-    border-radius: 20px;
-}
-
-.btn-primary-custom:hover {
-    background-color: #0e6d7a;
-    border-color: #0e6d7a;
-}
-
-.btn-primary-custom:focus,
-.btn-primary-custom.focus {
-    box-shadow: 0 0 0 0.2rem rgba(19, 132, 150, 0.5);
-}
-
-.btn-primary-custom.disabled,
-.btn-primary-custom:disabled {
-    background-color: #138496;
-    border-color: #138496;
-}
-
-
-
-    </style>
+    </div>
+</x-app-layout>
