@@ -17,10 +17,6 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('');
-});
-
-Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
