@@ -40,10 +40,11 @@
                                 @endforeach
                             </tbody>
                         </table>
-
+                        @if (Auth::user()->rol === 'ADMINISTRADOR')
                         <a href="{{ route('ficha_clinica.create') }}" class="btn btn-primary-custom">
                             Crear Nueva Ficha Clínica
                         </a>
+                        @endif
                     </div>
                 </div>
             </div>

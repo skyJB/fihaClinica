@@ -15,11 +15,14 @@ class AtencionMedica extends Model
         'id_ficha_clinica',
         'fecha_hora',
         'descripcion',
+        'tipo_atencion',
+        'desiciones_paciente'
     ];
 
-    public function fichaClinica()
-    {
-        return $this->belongsTo(FichaClinica::class, 'id_ficha_clinica');
-    }
+        public function fichaClinica()
+        {
+            return $this->belongsTo(FichaClinica::class, 'id_ficha_clinica');
+        }
+    
 }
 

@@ -19,6 +19,9 @@ return new class extends Migration
             $table->foreign('id_ficha_clinica')->references('id')->on('ficha_clinica');
             $table->dateTime('fecha_hora');
             $table->string('descripcion', 1000);
+            $table->string('tipo_atencion',1000);
+            $table->string('desiciones_paciente',1000);
+            
             $table->timestamps();
         });
     }

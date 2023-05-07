@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request; 
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function index()
@@ -52,7 +52,7 @@ class UserController extends Controller
     
         $user->save();
     
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
+        return redirect()->route('usuario.index')->with('success', 'Usuario actualizado exitosamente');
     }
     
 

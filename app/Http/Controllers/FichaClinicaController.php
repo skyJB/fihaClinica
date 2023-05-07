@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\FichaClinica;
 use Illuminate\Http\Request;
 use App\Models\Paciente;
+use App\Models\AtencionMedica;
+use Carbon\Carbon;
+
 
 class FichaClinicaController extends Controller
 {
@@ -44,18 +47,25 @@ public function index()
      */
     public function store(Request $request)
     {
-        // Validate and save the new FichaClinica
-        $validatedData = $request->validate([
-            'num_identificador' => 'required|string|max:20',
-            'id_paciente' => 'required|exists:paciente,id',
-        ]);
-
-        $fichaClinica = FichaClinica::create($validatedData);
-        $fichaClinicas = FichaClinica::all();
-        
-
-        return redirect()->route('ficha_clinica.index', compact('fichaClinicas'))
-                         ->with('success', 'Ficha Clínica created successfully.');
+      // Validate and save the new FichaClinica
+    $validatedData = $request->validate([
+        'num_identificador' => 'required|string|max:20',
+        'id_paciente' => 'required|exists:paciente,id',
+    ]);
+    $fichaClinica = FichaClinica::create($validatedData);
+    
+    // Create and save the related AtencionMedica
+    $atencionMedica = new AtencionMedica($request->all());
+    $atencionMedica->id_ficha_clinica = $fichaClinica->id;
+    
+    
+    $atencionMedica->fecha_hora = Carbon::now();
+    $atencionMedica->save();
+    
+    // Retrieve all FichaClinica objects and return to the index view with success message
+    $ficha_clinicas = FichaClinica::all();
+    return redirect()->route('ficha_clinica.index', compact('ficha_clinicas'))
+        ->with('success', 'Ficha Clínica created successfully.');
     }
 
     /**
@@ -94,7 +104,7 @@ public function index()
             'num_identificador' => 'required|string|max:20',
             'id_paciente' => 'required|exists:paciente,id',
         ]);
-
+        dd($validateData);
         $fichaClinica->update($validatedData);
 
         return redirect()->route('ficha_clinica.show', $fichaClinica->id)

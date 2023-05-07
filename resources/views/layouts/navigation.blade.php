@@ -16,23 +16,28 @@
                         {{ __('Buscar') }}
                     </x-nav-link>
                 </div>
+              
                 <!-- Paciente -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div  class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                
                     <x-nav-link :href="route('paciente.index')" :active="request()->routeIs('paciente')">
                         {{ __('Paciente') }}
                     </x-nav-link>
                 </div>
-<!-- Ficha Clinica -->
+               
+            <!-- Ficha Clinica -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('ficha_clinica.index')" :active="request()->routeIs('ficha_clinica')">
                         {{ __('Ficha clinica') }}
                     </x-nav-link>
                 </div>
+                @if (Auth::user()->rol === 'ADMINISTRADOR')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('usuario.index')" :active="request()->routeIs('usuario')">
                         {{ __('Usuario') }}
                     </x-nav-link>
                 </div>
+                @endif
             </div>
             
 

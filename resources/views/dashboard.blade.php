@@ -31,22 +31,25 @@
             @else
                 <p>Resultados de la búsqueda para "{{ $query }}":</p>
                 <table class="w-full mt-4">
-                    <thead>
-                        <tr class="bg-gray-100 border-b border-gray-300">
-                            <th class="px-4 py-2 font-semibold text-left">Nombre</th>
-                            <th class="px-4 py-2 font-semibold text-left">Identificación</th>
-                            <th class="px-4 py-2 font-semibold text-left"><a href="ficha_clinica">Ficha Clínica</a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pacientes as $paciente)
-                            <tr class="hover:bg-gray-50 border-b border-gray-300">
-                                <td class="px-4 py-2">{{ $paciente->nombre_completo }}</td>
-                                <td class="px-4 py-2">{{ $paciente->num_identificacion }}</td>
-                                <td class="px-4 py-2">{{ $paciente->fichaClinica ? $paciente->fichaClinica->num_identificador : '-' }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+<thead>
+    <tr class="bg-gray-100 border-b border-gray-300">
+        <th class="px-4 py-2 font-semibold text-left">Nombre</th>
+        <th class="px-4 py-2 font-semibold text-left">Identificación</th>
+        <th class="px-4 py-2 font-semibold text-left">Ficha Clínica</th>
+        <th class="px-4 py-2 font-semibold text-left">Fecha y hora de última atención</th>
+    </tr>
+</thead>
+<tbody>
+@foreach ($pacientes as $paciente)
+    <tr class="hover:bg-gray-50 border-b border-gray-300">
+        <td class="px-4 py-2">{{ $paciente->nombre_completo }}</td>
+        <td class="px-4 py-2">{{ $paciente->num_identificacion }}</td>
+        <td class="px-4 py-2">{{ $paciente->num_identificador ?? '-' }}</td>
+        <td class="px-4 py-2">{{ $paciente->fecha_hora}}</td>
+    </tr>
+@endforeach
+
+</tbody>
                 </table>
             @endif
         </div>

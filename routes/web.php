@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FichaClinicaController;
 use App\Http\Controllers\PacienteController;
-
 use App\Http\Controllers\UserController;
 
 /*
@@ -33,10 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('usuario', UserController::class);
     Route::get('/buscar-paciente', [App\Http\Controllers\PacienteController::class, 'buscar'])->name('buscar_paciente');
    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('usuario.edit');
-   Route::put('/users/{id}/edit', 'UserController@update')->name('users.update');
+   Route::put('/users/{id}/edit', [UserController::class, 'update'])->name('users.update');
 
    
 
 });
+
+
+
 
 require __DIR__.'/auth.php';

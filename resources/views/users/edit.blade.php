@@ -45,8 +45,9 @@
                                 <label for="rol">Rol:</label>
                                 <select name="rol" class="form-control" required>
                                     <option value="">Seleccione un rol</option>
-                                    <option value="administrador" {{ $user->rol == 'administrador' ? 'selected' : '' }}>Administrador</option>
-                                    <option value="usuario" {{ $user->rol == 'usuario' ? 'selected' : '' }}>Usuario</option>
+                                    <option value="administrador" {{ $user->rol == 'ADMINISTRADOR' ? 'selected' : '' }}>Administrador</option>
+                                    <option value="secretaria" {{ $user->rol == 'SECRETARIA' ? 'selected' : '' }}>Secretaria</option>
+                                    <option value="personal_medico" {{ $user->rol == 'PERSONAL_MEDICO' ? 'selected' : '' }}>Personal Medico</option>
                                 </select>
                             </div>
 

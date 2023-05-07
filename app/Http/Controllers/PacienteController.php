@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Paciente;
 use Illuminate\Http\Request;
-
+ use App\Models\FichaClinica;
+ use App\Models\AtencionMedica;
+ use Illuminate\Support\Facades\DB;
 class PacienteController extends Controller
 {
     public function index()
@@ -78,14 +80,30 @@ class PacienteController extends Controller
     }
 
     public function buscar(Request $request)
-{
-    $query = $request->input('q');
-
-    $pacientes = Paciente::where('nombre_completo', 'LIKE', "%$query%")
-        ->orWhere('num_identificacion', 'LIKE', "%$query%")
-        ->get();
-
-    return view('dashboard', compact('pacientes', 'query'));
-}
+    {
+        $query = $request->input('q');
+    
+        $pacientes = DB::table('paciente')
+            ->select('paciente.nombre_completo', 'paciente.num_identificacion', 'ficha_clinica.num_identificador', 'atencion_medica.fecha_hora')
+            ->join('ficha_clinica', 'ficha_clinica.id_paciente', '=', 'paciente.id')
+            ->join('atencion_medica', 'atencion_medica.id_ficha_clinica', '=', 'ficha_clinica.id')
+            ->where(function ($query) use ($request) {
+                $query->where('paciente.nombre_completo', 'LIKE', "%{$request->q}%")
+                    ->orWhere('paciente.num_identificacion', 'LIKE', "%{$request->q}%");
+            })
+            ->orderBy('atencion_medica.fecha_hora', 'DESC')
+            ->limit(1)
+            ->get();
+            
+        return view('dashboard', compact('pacientes', 'query'));
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 
 }

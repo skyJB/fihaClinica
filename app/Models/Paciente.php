@@ -19,4 +19,9 @@ class Paciente extends Model
         'ocupacion',
         'sistema_salud',
     ];
+
+    public function fichasClinicas()
+    {
+        return $this->hasMany(FichaClinica::class, 'id_paciente');
+    }
 }

@@ -17,4 +17,8 @@ class FichaClinica extends Model
     {
         return $this->belongsTo(Paciente::class, 'id_paciente');
     }
+    public function atencionMedica()
+    {
+        return $this->hasMany(AtencionMedica::class, 'id_ficha_clinica');
+    }
 }
